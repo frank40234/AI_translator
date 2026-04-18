@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "AI 網頁翻譯器",
+  "version": "1.0",
+  "description": "使用 AI 模型即時翻譯網頁內容",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://localhost/*",
+    "http://127.0.0.1/*",
+    "https://*.googleapis.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

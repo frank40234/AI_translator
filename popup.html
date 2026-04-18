@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { width: 340px; padding: 15px; font-family: sans-serif; background-color: #f9f9f9; color: #333; }
+    h3 { margin-top: 0; color: #1a73e8; display: flex; align-items: center; justify-content: space-between; }
+    .card { background: white; padding: 12px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 12px; }
+    label { font-size: 11px; font-weight: bold; display: block; margin-bottom: 4px; color: #555; }
+    select, input { width: 100%; margin-bottom: 8px; padding: 7px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
+    button { width: 100%; padding: 10px; cursor: pointer; margin-bottom: 8px; border: none; border-radius: 4px; font-weight: bold; }
+    #translateBtn { background-color: #34a853; color: white; font-size: 1.1em; }
+    .test-btn { background-color: #5f6368; color: white; font-size: 11px; padding: 5px; margin-bottom: 10px; }
+    #restoreBtn { background-color: #f1f3f4; color: #3c4043; border: 1px solid #dadce0; }
+    .btn-group { display: flex; gap: 8px; }
+    .btn-group button { flex: 1; margin-bottom: 0; font-size: 12px; padding: 6px; }
+    .active { background: #1a73e8 !important; color: white !important; }
+    .inactive { background: #eee; color: #333; }
+    #status { font-size: 12px; text-align: center; margin-bottom: 10px; font-weight: bold; min-height: 15px; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <h3>AI 網頁翻譯器 <span style="font-size: 10px; font-weight: normal; color: #999;">v2.1</span></h3>
+  
+  <div class="card">
+    <label>目標語言 (Target Language)</label>
+    <select id="targetLang">
+      <option value="繁體中文 (Traditional Chinese)">繁體中文</option>
+      <option value="简体中文 (Simplified Chinese)">简体中文</option>
+      <option value="English">English</option>
+      <option value="日本語 (Japanese)">日本語</option>
+      <option value="한국어 (Korean)">한국어</option>
+      <option value="Español (Spanish)">Español</option>
+      <option value="Français (French)">Français</option>
+      <option value="Deutsch (German)">Deutsch</option>
+      <option value="Português (Portuguese)">Português</option>
+      <option value="Русский (Russian)">Русский</option>
+      <option value="हिन्दी (Hindi)">हिन्दी</option>
+      <option value="العربية (Arabic)">العربية</option>
+    </select>
+
+    <label>提供者類型</label>
+    <div class="btn-group" style="margin-bottom: 10px;">
+      <button id="tabCloud" class="active">雲端 AI</button>
+      <button id="tabLocal" class="inactive">本地模型</button>
+    </div>
+
+    <div id="panelCloud">
+      <label>廠商 (Provider)</label>
+      <select id="cloudProvider">
+        <option value="google">Google Gemini</option>
+        <option value="openai">OpenAI (ChatGPT)</option>
+        <option value="anthropic">Anthropic (Claude)</option>
+        <option value="groq">Groq (極速)</option>
+      </select>
+      <label>API Key</label>
+      <input type="password" id="apiKey" placeholder="貼上 API Key">
+      <button id="testApiBtn" class="test-btn">🔍 測試雲端 API 並獲取模型</button>
+      <label>選擇雲端模型</label>
+      <select id="cloudModelSelect"><option value="">-- 請先測試 API --</option></select>
+    </div>
+
+    <div id="panelLocal" style="display: none;">
+      <label>API Endpoint</label>
+      <input type="text" id="localEndpoint" placeholder="http://localhost:11434/v1">
+      <button id="testLocalApiBtn" class="test-btn">🔍 測試本地連線並獲取模型</button>
+      <label>選擇本地模型</label>
+      <select id="localModelSelect"><option value="">-- 請先測試連線 --</option></select>
+    </div>
+    
+    <button id="saveBtn" style="background: #1a73e8; color: white; padding: 6px; font-size: 12px; margin-top: 5px;">💾 儲存設定</button>
+  </div>
+
+  <div class="card">
+    <label>翻譯模式</label>
+    <div class="btn-group">
+      <button id="modeOverlay" class="inactive">覆蓋原文</button>
+      <button id="modeDual" class="active">雙語對照</button>
+    </div>
+  </div>
+
+  <div id="status"></div>
+  
+  <button id="translateBtn">🚀 開始翻譯頁面</button>
+  <div id="controlPanel" style="display: none; flex-direction: row; gap: 8px;">
+    <button id="pauseBtn" style="background: #f4b400; color: white; flex:1;">⏸️</button>
+    <button id="stopBtn" style="background: #d93025; color: white; flex:1;">🛑</button>
+  </div>
+  <button id="restoreBtn" style="margin-top: 4px; padding: 6px; font-size: 13px;">🔄 還原原文</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>
